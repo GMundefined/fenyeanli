@@ -15,7 +15,8 @@ app.use(express.static('./public'))
 
 //处理 /请求 渲染index.ejs页面
 app.get('/',function(req,res){
-  res.render('index')
+  // res.render('index')
+  res.redirect('/message')
 })
 
 //处理/message开头的请求  交由路由文件来处理

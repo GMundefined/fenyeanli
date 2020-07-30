@@ -6,10 +6,29 @@
   <title>编辑留言</title>
 </head>
 <body>
-<form action="/message" method="post">
-  <p>用户名: <input type="username" disabled value="<%= docs.username %>"></p><br>
-  <p>留言:   <textarea name="message"value='<%= docs.message %>'></textarea></p><br>
-  <input type="submit"><br>
-</form>
+<!-- <form action="/message/edit" method="post"> -->
+  <p>用户名: <input type="text" name="username" disabled value="<%= docs.username %>"></p><br>
+  <p>留言:   <textarea name="message" required ><%= docs.message %></textarea></p><br>
+  <button>确认修改</button><br>
+<!-- </form> -->
 </body>
+<script src="/js/jquery.min.js"></script>
+<script>
+$(function(){
+  $('button').on('click',function(){
+    // console.log($('textarea[name=message]').val());
+    $.ajax({
+      url:'/message/modify',
+      method:'post',
+      data:{
+        message:$('textarea[name=message]').val()
+      },
+      success:function(reponse){
+        location.href='/message'
+      }
+    })
+  })
+})
+
+</script>
 </html>

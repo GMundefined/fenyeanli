@@ -10,39 +10,59 @@
       width: 80%;
       margin: 0 auto;
     }
+    .message{
+      border: 1px solid #ccc;
+    }
   </style>
 </head>
 <body>
   <!-- 表单提交数据  -->
 <form action="/message" method="post">
-  <p>用户名: <input type="text" name="username"></p><br>
-  <p>留言:   <textarea name="message"></textarea></p><br>
+  <p>用户名: <input type="text" name="username" required></p><br>
+  <p>留言:   <textarea name="message" required></textarea></p><br>
   <input type="submit"><br>
 </form>
   <!-- 展示留言的区域 -->
   <!-- 分页  -->
   <% for(var i=0;i< docs.length;i++){ %>
-  <p id="username"><%= docs[i].username%></p>
-  <p id="message"><%= docs[i].message%></p>
-  <p><%= docs[i].time%></p>
-  <button id="edit" onclick="edit(this)">编辑</button>
-  <button id="delete">删除</button>
+  <div class="message">
+    <p class="p1"><%= docs[i].username%></p>
+    <p class="p2"><%= docs[i].message%></p>
+    <p class="p3"><%= docs[i].time %></p>
+    <button  onclick="edit(this)">编辑</button>
+    <button onclick="del(this)">删除</button>
+  </div>
   <% } %>
   <!--  <a href="/message/edit">编辑</a>
   <a href="/message/delete">删除</a> -->
 <script src="/js/jquery.min.js"></script>
 <script src="/js/bootstrap.js"></script>
 <script>
-function edit(i){
+function edit(i){ 
   $.ajax({
     url:'/message/edit',
     data:{
-      username:$(i).prev().find('#username').html(),
-      message:$(i).prev().find('#message').html()
+      username:$(i).parent().children('.p1').html(),
+      message:$(i).parent().children('.p2').html(),
+      time:$(i).parent().children('.p3').html()
     },
     method:'post',
     success:function(response){
-      location.href='message/edit'
+      location.href='/message/edit'
+    }
+  })
+}
+function del(i){
+  $.ajax({
+    url:"/message/delete",
+    data:{
+      username:$(i).parent().children('.p1').html(),
+      message:$(i).parent().children('.p2').html(),
+      time:$(i).parent().children('.p3').html()
+    },
+    method:'post',
+    success:function(response){
+      $(i).parent().remove();
     }
   })
 }
