@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>编辑留言</title>
+</head>
+<body>
+<form action="/message" method="post">
+  <p>用户名: <input type="username" disabled value="<%= docs.username %>"></p><br>
+  <p>留言:   <textarea name="message"value='<%= docs.message %>'></textarea></p><br>
+  <input type="submit"><br>
+</form>
+</body>
+</html>
